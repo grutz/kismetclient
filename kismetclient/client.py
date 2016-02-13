@@ -24,7 +24,7 @@ class Command(object):
                 return '\x01%s\x01'
             else:
                 return opt
-        self.opts = map(wrap, opts)
+        self.opts = list(map(wrap, opts))
 
     def __str__(self):
         return '!%d %s %s' % (self.command_id,
@@ -70,7 +70,7 @@ class Client(object):
                               handlers.error,
                               send_enable=False)
         # Open a socket to the kismet server with line-based buffering
-        self.file = socket.create_connection(address).makefile('w', 1)
+        self.file = socket.create_connection(address).makefile('rw', 1)
 
         # Bootstrap the server protocols
         self.listen()  # Kismet startup line
@@ -112,5 +112,5 @@ class Client(object):
                 # If the protocol fields aren't known at all, we don't
                 # handle the message.
                 if field_names:
-                    named_fields = dict(zip(field_names, fields))
+                    named_fields = dict(list(zip(field_names, fields)))
                     return handler(self, **named_fields)

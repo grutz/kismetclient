@@ -19,7 +19,7 @@ k.register_handler('TRACKINFO', handlers.print_fields)
 
 
 def handle_ssid(client, ssid, mac):
-    print 'ssid spotted: "%s" with mac %s' % (ssid, mac)
+    print('ssid spotted: "%s" with mac %s' % (ssid, mac))
 
 k.register_handler('SSID', handle_ssid)
 
